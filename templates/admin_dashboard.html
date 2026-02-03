@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+
+    <style>
+        /* =========================
+           PAGE BACKGROUND
+           (purple–blue gradient)
+        ========================= */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6366f1, #60a5fa, #a78bfa);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        /* =========================
+           ADMIN DASHBOARD CARD
+        ========================= */
+        .admin-card {
+            background: #ffffff;
+            width: 520px;   /* same as student dashboard */
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .admin-card h2 {
+            margin-bottom: 28px;
+            color: #1f2937;
+        }
+
+        /* =========================
+           BUTTON LINKS (BLUE)
+        ========================= */
+        .admin-card a {
+            display: block;
+            margin: 14px 0;
+            padding: 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+        }
+
+        .admin-card a:hover {
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="admin-card">
+    <h2>Admin Dashboard</h2>
+
+    <a href="/students/">Manage Students</a>
+    <a href="/courses/">Manage Courses</a>
+    <a href="/exams/">Manage Exams</a>
+    <a href="/marks/">Add / Manage Marks</a>
+    <a href="/">Logout</a>
+</div>
+
+</body>
+</html>

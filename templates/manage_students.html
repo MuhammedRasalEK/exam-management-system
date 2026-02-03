@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Students</title>
+
+    <style>
+        /* =========================
+           PAGE BACKGROUND
+           (sky blue + floral softness)
+        ========================= */
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            /* layered gradient for flower-like softness */
+            background:
+                radial-gradient(circle at top left, rgba(255,255,255,0.6), transparent 40%),
+                radial-gradient(circle at bottom right, rgba(186,230,253,0.8), transparent 45%),
+                linear-gradient(135deg, #bae6fd, #7dd3fc);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        /* =========================
+           MANAGE STUDENTS CARD
+           (same size as admin dashboard)
+        ========================= */
+        .students-card {
+            background: #ffffff;
+            width: 560px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .students-card h2 {
+            text-align: center;
+            margin-bottom: 28px;
+            color: #1f2937;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        th {
+            background: #f1f5f9;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            color: #334155;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* =========================
+           ACTION BUTTONS (DARK BLUE)
+        ========================= */
+        .btn {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+            background: linear-gradient(135deg, #1e3a8a, #1d4ed8);
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+        .back-btn {
+            display: block;
+            margin-top: 26px;
+            text-align: center;
+            padding: 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            color: white;
+            background: linear-gradient(135deg, #1e3a8a, #1d4ed8);
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="students-card">
+    <h2>Manage Students</h2>
+
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Course</th>
+            <th>Action</th>
+        </tr>
+
+        {% for student in students %}
+        <tr>
+            <td>{{ student.user.username }}</td>
+            <td>{{ student.course.name }}</td>
+            <td>
+                <a class="btn"
+                   href="/delete-student/{{ student.id }}/"
+                   onclick="return confirm('Remove this student?')">
+                   Remove
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a class="back-btn" href="/admin-dashboard/">Back</a>
+</div>
+
+</body>
+</html>

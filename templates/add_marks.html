@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Marks</title>
+
+    <style>
+        /* =========================
+           PAGE BACKGROUND
+           (same admin background)
+        ========================= */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(255,255,255,0.6), transparent 40%),
+                radial-gradient(circle at bottom right, rgba(186,230,253,0.8), transparent 45%),
+                linear-gradient(135deg, #bae6fd, #7dd3fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        /* =========================
+           ADD MARKS CARD
+        ========================= */
+        .marks-card {
+            background: #ffffff;
+            width: 600px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .marks-card h2,
+        .marks-card h3 {
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 22px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        input,
+        select {
+            padding: 12px;
+            font-size: 15px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+        }
+
+        #subjects input {
+            margin-top: 10px;
+        }
+
+        /* =========================
+           BUTTONS (DARK BLUE)
+        ========================= */
+        .btn {
+            margin-top: 10px;
+            padding: 13px;
+            border-radius: 10px;
+            border: none;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            color: white;
+            background: linear-gradient(135deg, #1e3a8a, #1d4ed8);
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 15px;
+        }
+
+        th {
+            background: #f1f5f9;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            color: #334155;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+        .back-btn {
+            display: block;
+            margin-top: 26px;
+            text-align: center;
+            padding: 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            color: white;
+            background: linear-gradient(135deg, #1e3a8a, #1d4ed8);
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+        }
+    </style>
+
+    <script>
+        function generateFields() {
+            let count = document.getElementById("count").value;
+            let container = document.getElementById("subjects");
+            container.innerHTML = "";
+
+            for (let i = 1; i <= count; i++) {
+                container.innerHTML += `
+                    <input type="text" name="subject_${i}" placeholder="Subject ${i}" required>
+                    <input type="number" name="marks_${i}" placeholder="Marks ${i}" required>
+                `;
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="marks-card">
+    <h2>Add Marks</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <select name="student" required>
+            {% for student in students %}
+            <option value="{{ student.id }}">{{ student.user.username }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="exam" required>
+            {% for exam in exams %}
+            <option value="{{ exam.id }}">{{ exam.name }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="number"
+               id="count"
+               name="count"
+               placeholder="Number of Subjects"
+               oninput="generateFields()"
+               required>
+
+        <div id="subjects"></div>
+
+        <button class="btn" type="submit">Save Marks</button>
+    </form>
+
+    <h3>Existing Marks</h3>
+
+    <table>
+        <tr>
+            <th>Student</th>
+            <th>Exam</th>
+            <th>Subject</th>
+            <th>Marks</th>
+            <th>Action</th>
+        </tr>
+
+        {% for mark in marks %}
+        <tr>
+            <td>{{ mark.student.user.username }}</td>
+            <td>{{ mark.exam.name }}</td>
+            <td>{{ mark.subject }}</td>
+            <td>{{ mark.marks }}</td>
+            <td>
+                <a class="btn"
+                   href="/delete-mark/{{ mark.id }}/"
+                   onclick="return confirm('Delete this mark?')">
+                   Remove
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a class="back-btn" href="/admin-dashboard/">Back</a>
+</div>
+
+</body>
+</html>
