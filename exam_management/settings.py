@@ -48,16 +48,29 @@ WSGI_APPLICATION = 'exam_management.wsgi.application'
 # --------------------
 # DATABASE
 # --------------------
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'exam_management_db',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': 'localhost',
-        'PORT': '3306',
+import os
+
+if os.environ.get('RENDER'):
+    # Render / production → SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    # Local development → MySQL
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'exam_management_db',
+            'USER': 'root',
+            'PASSWORD': 'your_mysql_password',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
+    }
+
 
 # --------------------
 # PASSWORD VALIDATION
