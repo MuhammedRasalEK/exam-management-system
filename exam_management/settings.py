@@ -65,7 +65,7 @@ else:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'exam_management_db',
             'USER': 'root',
-            'PASSWORD': 'your_mysql_password',
+            'PASSWORD': '123456',
             'HOST': 'localhost',
             'PORT': '3306',
         }
